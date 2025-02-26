@@ -163,6 +163,33 @@
         background: #f6f7fb;
         margin-top: auto;
     }
+    /* Nieuwe CSS toevoegingen */
+    .language-switcher {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .language-btn {
+        padding: 8px 15px;
+        border-radius: 5px;
+        border: 2px solid #dde3ec;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .language-btn.active {
+        border-color: #6a64f1;
+        background: #e0e1ff;
+    }
+    .context-checkbox {
+        margin: 20px 0;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .context-textarea {
+        margin-top: 15px;
+    }
     @media (max-width: 640px) {
         .header h1 {
             font-size: 1.8rem;
@@ -189,20 +216,30 @@
 </head>
 <body>
     <div class="header">
-        <h1><br>PROMPT GENERATOR</h1>
+        <h1>PROMPT GENERATOR</h1>
         <h2>simple and efficient</h2>
     </div>
 
     <div class="formbold-main-wrapper">
         <div class="formbold-form-wrapper">
             <form>
+                <div class="language-switcher">
+                    <button type="button" class="language-btn active" id="btn-nl" onclick="setLanguage('nl')">🇳🇱 Nederlands</button>
+                    <button type="button" class="language-btn" id="btn-en" onclick="setLanguage('en')">🇬🇧 English</button>
+                </div>
+
+                <div class="context-checkbox">
+                    <input type="checkbox" id="default-context" checked onchange="toggleContext()">
+                    <label for="default-context">Standaard context toevoegen</label>
+                </div>
+
                 <div class="formbold-input-group">
                     <label class="formbold-form-label">Hoofdprompt</label>
                     <textarea 
                         id="main-prompt" 
                         class="formbold-form-input" 
                         placeholder="Gebruik <var1>, <var2> etc. om variabelen in te voegen"
-                    ></textarea>
+                    >Geef alleen de output weer.</textarea>
                 </div>
 
                 <div class="button-group">
@@ -223,6 +260,14 @@
 
                 <div id="variables-container"></div>
 
+                <div id="context-container" class="context-textarea">
+                    <textarea 
+                        id="default-context-text" 
+                        class="formbold-form-input" 
+                        style="min-height: 100px"
+                    >Mijn naam is Rogier. Geef het antwoord in het {taal} zonder extra opmaak of toelichting.</textarea>
+                </div>
+
                 <div class="output-container" id="output"></div>
                 <button type="button" id="copyButton" class="formbold-btn" style="display: none; margin-top: 15px;" onclick="copyToClipboard()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -242,6 +287,8 @@
 
     <script>
         let varCount = 0;
+        let currentLanguage = 'nl';
+        let includeContext = true;
 
         function addVariable() {
             varCount++;
@@ -271,9 +318,28 @@
             promptField.focus();
         }
 
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            document.getElementById('btn-nl').classList.remove('active');
+            document.getElementById('btn-en').classList.remove('active');
+            document.getElementById(`btn-${lang}`).classList.add('active');
+            
+            const contextText = document.getElementById('default-context-text');
+            contextText.value = contextText.value.replace(/in het .{2,}? /, `in het ${lang === 'nl' ? 'Nederlands' : 'Engels'} `);
+        }
+
+        function toggleContext() {
+            includeContext = document.getElementById('default-context').checked;
+            document.getElementById('context-container').style.display = includeContext ? 'block' : 'none';
+        }
+
         function generateOutput() {
             let output = document.getElementById('main-prompt').value + '\n\n';
             
+            if(includeContext) {
+                output += document.getElementById('default-context-text').value + '\n\n';
+            }
+
             for(let i = 1; i <= varCount; i++) {
                 const varContent = document.getElementById(`var-${i}`)?.value || '';
                 output += `<var${i}>\n${varContent}\n</var${i}>\n\n`;
@@ -293,6 +359,9 @@
                 setTimeout(() => notification.classList.remove('show'), 2000);
             });
         }
+
+        // Initialisatie
+        toggleContext(); // Toon contextveld standaard
     </script>
 </body>
 </html>
