@@ -4,214 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/rooooog/simpleprompt/main/favicon/favicon.ico">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://raw.githubusercontent.com/rooooog/simpleprompt/main/favicon/apple-touch-icon.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://raw.githubusercontent.com/rooooog/simpleprompt/main/favicon/apple-touch-icon.png">
     <meta name="description" content="Een eenvoudige en efficiënte tool voor het genereren van AI-prompts met variabelen">
     <meta name="keywords" content="AI, prompt generator, template, variabelen, efficiënt">
     <meta name="author" content="Rogier Graafstal">
     <title>Prompt Generator - Simple and Efficient</title>
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    body {
-        font-family: 'Inter', sans-serif;
-        background: #f6f7fb;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
-    .header {
-        text-align: center;
-        margin-bottom: 2rem;
-        padding: 0 1rem;
-    }
-    .header h1 {
-        font-size: 2.5rem;
-        color: #07074d;
-        margin-bottom: 0.5rem;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-    }
-    .header h2 {
-        font-size: 1.1rem;
-        color: #536387;
-        font-style: italic;
-        font-weight: 400;
-    }
-    .formbold-main-wrapper {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 48px 20px;
-        width: 100%;
-    }
-    .formbold-form-wrapper {
-        margin: 0 auto;
-        max-width: 570px;
-        width: 100%;
-        background: white;
-        padding: 40px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        position: relative;
-    }
-    .formbold-form-label {
-        color: #07074d;
-        font-size: 14px;
-        line-height: 24px;
-        display: block;
-        margin-bottom: 10px;
-        font-weight: 600;
-    }
-    .formbold-form-input {
-        width: 100%;
-        padding: 13px 22px;
-        border-radius: 5px;
-        border: 1px solid #dde3ec;
-        background: #ffffff;
-        font-weight: 500;
-        font-size: 16px;
-        color: #07074d;
-        outline: none;
-        resize: vertical;
-        min-height: 150px;
-    }
-    .formbold-form-input::placeholder {
-        color: #536387;
-    }
-    .formbold-form-input:focus {
-        border-color: #6a64f1;
-        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
-    }
-    .formbold-btn {
-        font-size: 16px;
-        border-radius: 5px;
-        padding: 14px 25px;
-        border: none;
-        font-weight: 500;
-        background-color: #6a64f1;
-        color: white;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .formbold-btn:hover {
-        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
-        background-color: #5a54d1;
-    }
-    .variable-group {
-        margin-top: 20px;
-        border-left: 3px solid #6a64f1;
-        padding-left: 15px;
-    }
-    .output-container {
-        margin-top: 25px;
-        padding: 20px;
-        background: #f8f9fa;
-        border-radius: 5px;
-        white-space: pre-wrap;
-        position: relative;
-    }
-    .button-group {
-        display: flex;
-        gap: 15px;
-        margin-top: 25px;
-        flex-wrap: wrap;
-    }
-    .insert-btn {
-        background: #e0e1ff;
-        color: #6a64f1;
-        padding: 8px 15px;
-        border-radius: 4px;
-        font-size: 14px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border: none;
-    }
-    .insert-btn:hover {
-        background: #d0d1ff;
-    }
-    .copy-notification {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #6a64f1;
-        color: white;
-        padding: 12px 25px;
-        border-radius: 25px;
-        font-size: 14px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        opacity: 0;
-        transition: opacity 0.3s;
-        z-index: 1000;
-    }
-    .show {
-        opacity: 1;
-    }
-    .footer {
-        text-align: center;
-        padding: 1.5rem;
-        color: #536387;
-        font-size: 0.9rem;
-        background: #f6f7fb;
-        margin-top: auto;
-    }
-    /* Nieuwe CSS toevoegingen */
-    .language-switcher {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-    .language-btn {
-        padding: 8px 15px;
-        border-radius: 5px;
-        border: 2px solid #dde3ec;
-        background: white;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    .language-btn.active {
-        border-color: #6a64f1;
-        background: #e0e1ff;
-    }
-    .context-checkbox {
-        margin: 20px 0;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-    .context-textarea {
-        margin-top: 15px;
-    }
-    @media (max-width: 640px) {
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f6f7fb;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
         .header h1 {
-            font-size: 1.8rem;
-            letter-spacing: 1px;
+            font-size: 2.5rem;
+            color: #07074d;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
         .header h2 {
-            font-size: 1rem;
+            font-size: 1.1rem;
+            color: #536387;
+            font-style: italic;
+            font-weight: 400;
+        }
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .language-btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 2px solid #dde3ec;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .language-btn.active {
+            border-color: #6a64f1;
+            background: #e0e1ff;
+        }
+        .context-checkbox {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
         .formbold-main-wrapper {
-            padding: 30px 15px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 20px;
+            width: 100%;
         }
         .formbold-form-wrapper {
-            padding: 25px;
-        }
-        .formbold-btn {
+            margin: 0 auto;
+            max-width: 570px;
             width: 100%;
-            justify-content: center;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
-        .button-group {
-            gap: 10px;
+        .formbold-form-label {
+            color: #07074d;
+            font-size: 14px;
+            line-height: 24px;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
-    }
+        .formbold-form-input {
+            width: 100%;
+            padding: 13px 22px;
+            border-radius: 5px;
+            border: 1px solid #dde3ec;
+            background: #ffffff;
+            font-weight: 500;
+            font-size: 16px;
+            color: #07074d;
+            outline: none;
+            resize: vertical;
+            min-height: 150px;
+        }
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #536387;
+            font-size: 0.9rem;
+            background: #f6f7fb;
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
@@ -223,58 +122,31 @@
     <div class="formbold-main-wrapper">
         <div class="formbold-form-wrapper">
             <form>
+                <!-- Taalwisselaar -->
                 <div class="language-switcher">
                     <button type="button" class="language-btn active" id="btn-nl" onclick="setLanguage('nl')">🇳🇱 Nederlands</button>
                     <button type="button" class="language-btn" id="btn-en" onclick="setLanguage('en')">🇬🇧 English</button>
                 </div>
 
+                <!-- Context Checkbox -->
                 <div class="context-checkbox">
                     <input type="checkbox" id="default-context" checked onchange="toggleContext()">
                     <label for="default-context">Standaard context toevoegen</label>
                 </div>
 
+                <!-- Context Tekstbox -->
+                <div class="formbold-input-group">
+                    <label class="formbold-form-label">Context</label>
+                    <textarea id="context-box" class="formbold-form-input" readonly>geef alleen de output weer.</textarea>
+                </div>
+
+                <!-- Hoofdprompt -->
                 <div class="formbold-input-group">
                     <label class="formbold-form-label">Hoofdprompt</label>
-                    <textarea 
-                        id="main-prompt" 
-                        class="formbold-form-input" 
-                        placeholder="Gebruik <var1>, <var2> etc. om variabelen in te voegen"
-                    >Geef alleen de output weer.</textarea>
-                </div>
-
-                <div class="button-group">
-                    <button type="button" class="formbold-btn" onclick="addVariable()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 5v14M5 12h14"/>
-                        </svg>
-                        Variabele toevoegen
-                    </button>
-                    <button type="button" class="formbold-btn" onclick="generateOutput()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                            <polyline points="22 4 12 14.01 9 11.01"/>
-                        </svg>
-                        Genereren
-                    </button>
-                </div>
-
-                <div id="variables-container"></div>
-
-                <div id="context-container" class="context-textarea">
-                    <textarea 
-                        id="default-context-text" 
-                        class="formbold-form-input" 
-                        style="min-height: 100px"
-                    >Mijn naam is Rogier. Geef het antwoord in het {taal} zonder extra opmaak of toelichting.</textarea>
+                    <textarea id="main-prompt" class="formbold-form-input"></textarea>
                 </div>
 
                 <div class="output-container" id="output"></div>
-                <button type="button" id="copyButton" class="formbold-btn" style="display: none; margin-top: 15px;" onclick="copyToClipboard()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M8 4v12h12V4H8zM6 2h16v16H6V2zM4 6H2v18h18v-2"/>
-                    </svg>
-                    Kopieer Prompt
-                </button>
             </form>
         </div>
     </div>
@@ -283,85 +155,27 @@
         © 2025 Rogier Graafstal. All rights reserved.
     </div>
 
-    <div id="copyNotification" class="copy-notification">Prompt gekopieerd! 📋</div>
-
     <script>
-        let varCount = 0;
-        let currentLanguage = 'nl';
-        let includeContext = true;
-
-        function addVariable() {
-            varCount++;
-            const varGroup = document.createElement('div');
-            varGroup.className = 'variable-group';
-            varGroup.innerHTML = `
-                <div class="formbold-input-group">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <label class="formbold-form-label">Variabele ${varCount}</label>
-                        <button type="button" class="insert-btn" onclick="insertPlaceholder(${varCount})">Voeg <var${varCount}> in</button>
-                    </div>
-                    <textarea 
-                        id="var-${varCount}" 
-                        class="formbold-form-input" 
-                        placeholder="Inhoud voor variabele ${varCount}"
-                        style="min-height: 100px"
-                    ></textarea>
-                </div>
-            `;
-            const container = document.getElementById('variables-container');
-            container.insertBefore(varGroup, container.firstChild);
-        }
-
-        function insertPlaceholder(varNumber) {
-            const promptField = document.getElementById('main-prompt');
-            promptField.value += `<var${varNumber}>`;
-            promptField.focus();
-        }
+        let language = 'nl';
+        let defaultContext = true;
 
         function setLanguage(lang) {
-            currentLanguage = lang;
-            document.getElementById('btn-nl').classList.remove('active');
-            document.getElementById('btn-en').classList.remove('active');
-            document.getElementById(`btn-${lang}`).classList.add('active');
-            
-            const contextText = document.getElementById('default-context-text');
-            contextText.value = contextText.value.replace(/in het .{2,}? /, `in het ${lang === 'nl' ? 'Nederlands' : 'Engels'} `);
+            language = lang;
+            document.getElementById('btn-nl').classList.toggle('active', lang === 'nl');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+            if (lang === 'nl') {
+                document.getElementById('main-prompt').placeholder = "Gebruik <var1>, <var2> etc. om variabelen in te voegen";
+            } else {
+                document.getElementById('main-prompt').placeholder = "Use <var1>, <var2>, etc. to insert variables";
+            }
         }
 
         function toggleContext() {
-            includeContext = document.getElementById('default-context').checked;
-            document.getElementById('context-container').style.display = includeContext ? 'block' : 'none';
+            let contextBox = document.getElementById('context-box');
+            defaultContext = document.getElementById('default-context').checked;
+            contextBox.value = defaultContext ? "geef alleen de output weer." : "";
         }
-
-        function generateOutput() {
-            let output = document.getElementById('main-prompt').value + '\n\n';
-            
-            if(includeContext) {
-                output += document.getElementById('default-context-text').value + '\n\n';
-            }
-
-            for(let i = 1; i <= varCount; i++) {
-                const varContent = document.getElementById(`var-${i}`)?.value || '';
-                output += `<var${i}>\n${varContent}\n</var${i}>\n\n`;
-            }
-
-            const outputElement = document.getElementById('output');
-            outputElement.textContent = output.trim();
-            document.getElementById('copyButton').style.display = 'flex';
-            copyToClipboard();
-        }
-
-        function copyToClipboard() {
-            const text = document.getElementById('output').textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                const notification = document.getElementById('copyNotification');
-                notification.classList.add('show');
-                setTimeout(() => notification.classList.remove('show'), 2000);
-            });
-        }
-
-        // Initialisatie
-        toggleContext(); // Toon contextveld standaard
     </script>
 </body>
 </html>
