@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    
+    <title>WebApp Loader</title> 
+    
+    <style>
+        /* Verwijder alle standaard marges/paddings van de browser */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%; /* Zorg dat html en body de volledige hoogte innemen */
+            width: 100%;  /* Zorg dat html en body de volledige breedte innemen */
+            overflow: hidden; /* Voorkom scrollbalken op de body zelf */
+        }
+
+        /* Laat het iframe het volledige body-element vullen */
+        iframe {
+            display: block; /* Gedraagt zich als een block element */
+            width: 100%;
+            height: 100%;
+            border: none; /* Geen enkele rand (belangrijk!) */
+        }
+    </style>
+</head>
+<body>
+    <iframe 
+        src="https://script.google.com/macros/s/AKfycbw0U0i-S-Da2ZsCnDEYIYydTC8LGN_ZhFzyREkwgEY1sAGLz53kTmpzHOsFe1x3MTHVlw/exec" 
+        title="Ingesloten Web Applicatie"> 
+        </iframe>
+</body>
+</html>
