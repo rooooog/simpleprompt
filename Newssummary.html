@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
-<meta charset="utf-8">
-<title>Rogiers news</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mijn Web App</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .iframe-wrapper {
+            /* Optioneel: voeg wat ruimte toe rondom het iframe */
+            padding: 15px; 
+            box-sizing: border-box; /* Zorg dat padding binnen de 100% breedte valt */
+        }
+
+        .iframe-wrapper iframe {
+            display: block; /* Voorkomt extra witruimte onder het iframe */
+            width: 100%;    /* Volledige breedte van de wrapper */
+            height: 85vh;   /* Hoogte is 85% van de viewport (scherm) hoogte. Pas aan naar wens (bv 90vh, 80vh) */
+            border: 0;      /* Geen rand */
+        }
+    </style>
 </head>
 <body>
-<iframe src="https://script.google.com/macros/s/AKfycbw0U0i-S-Da2ZsCnDEYIYydTC8LGN_ZhFzyREkwgEY1sAGLz53kTmpzHOsFe1x3MTHVlw/exec" height="100%" scrolling="no" style="border:none;"></iframe>
-</body>
+
+    <h1>Mijn Ingesloten Web App</h1>
+    <div class="iframe-wrapper">
+        <iframe 
+            src="https://script.google.com/macros/s/AKfycbw0U0i-S-Da2ZsCnDEYIYydTC8LGN_ZhFzyREkwgEY1sAGLz53kTmpzHOsFe1x3MTHVlw/exec" 
+            title="Mijn Google Apps Script Web App" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    
+    </body>
 </html>
